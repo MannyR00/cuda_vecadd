@@ -15,9 +15,6 @@ int main(void)
     int N = 1<<29;
     float *x, *y;
 
-    int deviceID=0;
-    cudaMemPrefetchAsync((void *)x, N*sizeof(float), deviceID) ;
-    cudaMemPrefetchAsync((void *)y, N*sizeof(float), deviceID) ;
 
 
     // Allocate Unified Memory – accessible from CPU or GPU
@@ -28,6 +25,10 @@ int main(void)
     for (int i = 0; i < N; i++) {
         x[i] = 1.0f;
         y[i] = 2.0f;
+        int deviceID=0;
+        cudaMemPrefetchAsync((void *)x, N*sizeof(float), deviceID) ;
+        cudaMemPrefetchAsync((void *)y, N*sizeof(float), deviceID) ;
+
     }
 
     // Run kernel on 1M elements on the GPU
